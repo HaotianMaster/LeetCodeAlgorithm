@@ -1,29 +1,26 @@
 import java.util.*;
-public class Solution {
-
-
-
-    public static void main(String[] arg){
-        mSolution sol = new mSolution();
-        int[] nums = {2, 7, 11, 15};
-        sol.twoSum(nums, 26);
-        System.out.println("Hello World");
-    }
-}
-
-
-class mSolution {
-    public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer>map = new HashMap<>();
-        int complement;
-        for (int i=0;i<nums.length;i++){
-            complement = target-nums[i];
-            if (map.containsKey(complement)){
-                return new int[] {map.get(complement), i};
+class Solution {
+    public int trap(int[] A) {
+        if (A==null) return 0;
+        Stack<Integer> s = new Stack<Integer>();
+        int i = 0, maxWater = 0, maxBotWater = 0;
+        while (i < A.length){
+            if (s.isEmpty() || A[i]<=A[s.peek()]){
+                s.push(i++);
             }
-            map.put(nums[i], i);
-            System.out.println(map.get(nums[i]));
+            else {
+                int bot = s.pop();
+                maxBotWater = s.isEmpty()? // empty means no il
+                0:(Math.min(A[s.peek()],A[i])-A[bot])*(i-s.peek()-1);
+                maxWater += maxBotWater;
+            }
         }
-        throw new IllegalArgumentException("No two sum solution");
+        return maxWater;
+    }
+    public static void main(String[] args) {
+        int[] nums = {1,0,0,1,2};
+	Solution sol = new Solution();
+	int test = sol.trap(nums);
+        System.out.println(test);
     }
 }
