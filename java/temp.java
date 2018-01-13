@@ -1,44 +1,40 @@
 public class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        // Deal with invalid corner case. 
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) return 0.0;
+        
+        int m = nums1.length, n = nums2.length;
+        int l = (m + n + 1) / 2; //left half of the combined median
+        int r = (m + n + 2) / 2; //right half of the combined median
+        
+        // If the nums1.length + nums2.length is odd, the 2 function will return the same number
+        // Else if nums1.length + nums2.length is even, the 2 function will return the left number and right number that make up a median
+        return (getKth(nums1, 0, nums2, 0, l) + getKth(nums1, 0, nums2, 0, r)) / 2.0;
+    }
     
-    /**
-     * We want to know the maximum amount of water that can be trapped. 
-     * It is obvious that the 2 boundary, which is height[0] and height[height.length - 1] respectively, cannot hold any water
-     * Starting from midpoint and traverse to left and right seems like a reasonable solution, but it is hard to decide where to start and stop. And there is to many possible conditions we need to consider. 
-     * So we may consider start from 2 boundary of the array and traverse inside the height array. 
-     * Based on the bucket theory, we need to always consider from the side with a lower height. 
-     * So the algorithm is following:
-     * 1. Start from the 2 boundary of the height array and keep 2 pointers for left and right point. 
-     * 2. Keep 2 int value leftH and rightH to store the previous height we encountered at 2 sides. 
-     * 3. Move the pointer with lower height since this is the upper bound of the bucket. There are 2 conditions:
-     * (1) the height next to current point has a greater height, then we cannot increase the total water. Just update the corresponding height of left or right. 
-     * (2) the height next to current point has a smaller height, then we can at least hold leftH/rightH - height[pointer] more water.(remember we are always moving from the side with smaller height)
-     * 4. Continue until left pointer and right pointer meets. 
-     * O(n) time, O(1) space where n is the length of the height array. 
-     */
-    
-    public int trap(int[] height) {
-        if (height == null || height.length == 0) {
-            return 0;
+    private double getKth(int[] nums1, int start1, int[] nums2, int start2, int k) {
+        // This function finds the Kth element in nums1 + nums2
+        
+        // If nums1 is exhausted, return kth number in nums2
+        if (start1 > nums1.length - 1) return nums2[start2 + k - 1];
+        
+        // If nums2 is exhausted, return kth number in nums1
+        if (start2 > nums2.length - 1) return nums1[start1 + k - 1];
+        
+        // If k == 1, return the first number
+        // Since nums1 and nums2 is sorted, the smaller one among the start point of nums1 and nums2 is the first one
+        if (k == 1) return Math.min(nums1[start1], nums2[start2]);
+        
+        int mid1 = Integer.MAX_VALUE;
+        int mid2 = Integer.MAX_VALUE;
+        if (start1 + k / 2 - 1 < nums1.length) mid1 = nums1[start1 + k / 2 - 1];
+        if (start2 + k / 2 - 1 < nums2.length) mid2 = nums2[start2 + k / 2 - 1];
+        
+        // Throw away half of the array from nums1 or nums2. And cut k in half
+        if (mid1 < mid2) {
+            return getKth(nums1, start1 + k / 2, nums2, start2, k - k / 2); //nums1.right + nums2
+        } else {
+            return getKth(nums1, start1, nums2, start2 + k / 2, k - k / 2); //nums1 + nums2.right
         }
-        
-        int left = 0;
-        int right = height.length - 1;
-        int leftH = height[left];
-        int rightH = height[right];
-        
-        int ret = 0;
-        while (left < right) {
-            if (height[left] < height[right]) {
-                left++;
-                ret += Math.max(0, leftH - height[left]);
-                leftH = Math.max(height[left], leftH);
-            } else {
-                right--;
-                ret += Math.max(0, rightH - height[right]);
-                rightH = Math.max(height[right], rightH);
-            }
-        }
-        
-        return ret;
     }
 }
