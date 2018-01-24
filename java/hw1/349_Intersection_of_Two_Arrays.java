@@ -1,6 +1,7 @@
 // Two sets. O(n) time, O(n) space solution. 
 class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) return new int[]{};
         HashSet<Integer> set1 = new HashSet<>();
         HashSet<Integer> set2 = new HashSet<>();
         for (int i=0; i<nums1.length; i++) {
@@ -26,6 +27,7 @@ class Solution {
 // Better two sets. O(n) time, O(n) space solution. 
 class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) return new int[]{};
         HashSet<Integer> set1 = new HashSet<>();
         HashSet<Integer> intersec = new HashSet<>();
         for (int i=0; i<nums1.length; i++) {
@@ -45,7 +47,6 @@ class Solution {
 }
 
 // Two pointers. O(nlogn) time, O(1) space solution.
-
 class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
         if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) return new int[]{};
