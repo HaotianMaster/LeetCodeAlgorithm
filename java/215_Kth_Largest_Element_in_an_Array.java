@@ -63,3 +63,85 @@ class Solution {
         nums[j] = temp;
     }
 }
+
+// Recursive QuickSort. Better implementation.
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int i = 0, j = nums.length - 1;
+        k = nums.length-k;
+        quicksort(nums, i, j);
+        return nums[k];
+    }
+    
+    private void quicksort(int[] nums, int low, int high) {
+        int p = partition(nums, low, high);
+        if (low < p-1) {
+            quicksort(nums, low, p-1);
+        }
+        if (high > p+1) {
+            quicksort(nums, p+1, high);
+        }
+    }
+    
+    private int partition(int[] nums, int low, int high) {
+        int l = low + 1;
+        int r = high;
+        while(l <= r) {
+            if(nums[l] < nums[low]) {
+                l++;
+            } else {
+                swap(nums, l, r);
+                r--;
+            }
+        }
+        swap(nums, low, r);
+        return r;
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }    
+}
+
+
+//John's solution. QuickSelect. 
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int low = 0, high = nums.length - 1;
+        k = nums.length-k;
+        while (low < high) {
+            int p = partition(nums, low, high);
+            if (p < k) {
+                low = p + 1;
+            }
+            else if (p > k) {
+                high = p - 1;
+            }
+            else break;
+        }
+        return nums[k];
+    }
+    
+    private int partition(int[] nums, int low, int high) {
+        int l = low + 1;
+        int r = high;
+        while(l <= r) {
+            if(nums[l] < nums[low]) {
+                l++;
+            } else {
+                swap(nums, l, r);
+                r--;
+            }
+        }
+        swap(nums, low, r);
+        return r;
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }    
+}
