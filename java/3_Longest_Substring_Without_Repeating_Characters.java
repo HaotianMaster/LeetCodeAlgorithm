@@ -1,25 +1,23 @@
-// My initial solution. Although it cannot be accepted by this question,
-// but if String s only contain character from 'a' to 'z', it should works. 
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) return 0;
-        int[] count = new int[26];
-        int max = 0;
-        int i = 0;
-        for (int j=0; j<s.length(); j++) {
-            int curr = s.charAt(j)-'a';
-            if (count[curr] != 0) {
-                count[curr]++;
-                while (count[s.charAt(i)-'a'] < 2) i++;
-                i++;
-                count[curr]--;
+        int[] count = new int[256];
+        int l = 0, res = 0;
+        for (int r = 0; r < s.length(); r++) {
+            Character ch_r = s.charAt(r);
+            Character ch_l = s.charAt(l);
+            count[ch_r]++;
+            if (count[ch_r] == 1) {
+                res = Math.max(res, r - l + 1);
             }
-            else {
-                count[curr]++;
+            else {  
+                while (l <= r && count[ch_r] > 1) {
+                    l++;
+                    count[ch_l]--;
+                    ch_l = s.charAt(l);
+                }
             }
-            max = Math.max(max, j-i);
         }
-        return max;
+        return res;
     }
 }
 

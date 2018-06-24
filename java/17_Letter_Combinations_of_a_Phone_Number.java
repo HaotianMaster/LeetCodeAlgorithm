@@ -44,7 +44,7 @@ class Solution {
         map.put('9', new char[]{'w', 'x', 'y', 'z'});
         Deque<String> q = new ArrayDeque<>();
         q.add("");
-        for (int currIdx=0; currIdx<digits.length(); currIdx++) {
+        for (int currIdx=0; currIdx < digits.length(); currIdx++) {
             char c = digits.charAt(currIdx);
             while (q.peek().length() == currIdx) {
                 String prev = q.poll();

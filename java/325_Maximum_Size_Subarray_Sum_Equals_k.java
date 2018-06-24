@@ -17,3 +17,21 @@ class Solution {
         return max;
     }
 }
+
+// HashMap, O(n) time.
+class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        if (nums == null || nums.length == 0) return 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int presum = 0, max = 0;
+        for (int i = 0; i < nums.length; i++) {
+            presum += nums[i];
+            map.put(presum, map.getOrDefault(presum, i));
+            if (map.containsKey(presum - k)) {
+                max = Math.max(max, i - map.get(presum - k));
+            }
+        }
+        return max;
+    }
+}

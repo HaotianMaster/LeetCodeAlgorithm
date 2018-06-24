@@ -6,7 +6,7 @@
  *     ListNode(int x) { val = x; }
  * }
  */
-// Two pass solution.
+// Two pass solution with one pointer.
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
@@ -27,10 +27,10 @@ class Solution {
         return dummy.next;
     }
 }
-// One pass soultion.
+// One pass soultion with two pointer.
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dummy = new ListNode(0);
+        ListNode dummy = new ListNode(-1);
         dummy.next = head;
         ListNode slow = dummy;
         ListNode fast = dummy;
@@ -38,7 +38,7 @@ class Solution {
             fast = fast.next;
             n--;
         }
-        while (fast != null && fast.next != null) {
+        while (fast.next != null) {
             fast = fast.next;
             slow = slow.next;
         }

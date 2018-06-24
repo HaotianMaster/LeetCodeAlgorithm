@@ -12,3 +12,33 @@ class Solution {
         return true;
     }
 }
+
+class Solution {
+    public boolean isValid(String s) {
+        if (s == null || s.length() == 0) return true;
+        Stack<Character> st = new Stack<>();
+        st.push(s.charAt(0));
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == ')' || s.charAt(i) == '}' || s.charAt(i) == ']') {
+                if (st.size() == 0) return false;
+                else {
+                    char ch = st.pop();
+                    if (s.charAt(i) == ')' && ch != '(') {
+                        return false;
+                    }
+                    else if (s.charAt(i) == '}' && ch != '{') {
+                        return false;
+                    }
+                    else if (s.charAt(i) == ']' && ch != '[') {
+                        return false;
+                    }
+                }
+            }
+            else {
+                st.push(s.charAt(i));
+            }
+        }
+        if (st.size() > 0) return false;
+        return true;
+    }
+}
