@@ -1,14 +1,13 @@
 // HashSet. O(n) time, O(n) space.
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        if (nums==null || nums.length==0) return 1;
+        if (nums == null || nums.length == 0) return 1;
         Set<Integer> num_set = new HashSet<>();
-        for (int num:nums) num_set.add(num);
-        int curr = 0;
-        for (curr=1; curr<=nums.length; curr++) {
+        for (int num : nums) num_set.add(num);
+        for (int curr = 1; curr <= nums.length; curr++) {
             if (!num_set.contains(curr)) return curr;
         }
-        return curr;
+        return nums.length + 1;        
     }
 }
 // O(n) time, O(1) space.

@@ -49,57 +49,46 @@ class Solution {
 
 class Solution {
     public int trap(int[] height) {
-        int max = 0;
-        if (height==null||height.length <= 1) {
-            return max;
-        }
-        Stack<Integer> st = new Stack<>();
+        if (height == null || height.length <= 1) return 0;
+        int res = 0;
         int right = 0;
-        while (right<height.length) {
-            if (st.isEmpty() || height[right]<=height[st.peek()]) {
+        Stack<Integer> st = new Stack<>();
+        while (right < height.length) {
+            if (st.isEmpty() || height[right] <= height[st.peek()]) {
                 st.push(right++);
             }
             else {
                 int bot = st.pop();
-                if (st.isEmpty()) {
-                    max = max+0;
-                }
-                else {
+                if (!st.isEmpty()) {
                     int left = st.peek();
-                    max = max+(right-left-1)*(Math.min(height[left], height[right])-height[bot]);
-                }   
+                    res += (right - left - 1) * (Math.min(height[left], height[right]) - height[bot]);                    
+                }
             }
         }
-        return max;
+        return res;
     }
 }
 
 
 
-// Approach #4 Using 2 pointers [Accepted]
+// Approach #4 Using 2 pointers [Accepted] O(n) time and O(1) space.
 
 class Solution {
     public int trap(int[] height) {
-        int max = 0;
-        if (height==null||height.length <= 1) {
-            return max;
-        }
-        int left = 0;
-        int right = height.length-1;
-        int leftmax = 0;
-        int rightmax = 0;
-        while (left<right) {
-            if (height[left]<height[right]) {
+        if (height == null || height.length <= 1) return 0;
+        int res = 0;
+        int left = 0, right = height.length - 1;
+        int leftmax = 0, rightmax = 0;
+        while (left < right) {
+            if (height[left] < height[right]) {
                 leftmax = Math.max(leftmax, height[left]);
-                max += Math.max(0, leftmax-height[left]);
-                left++;
+                res += leftmax - height[left++];
             }
             else {
                 rightmax = Math.max(rightmax, height[right]);
-                max += Math.max(0, rightmax-height[right]);
-                right--;
+                res += rightmax - height[right--];                
             }
         }
-        return max;
+        return res;
     }
 }

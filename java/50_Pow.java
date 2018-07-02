@@ -22,19 +22,23 @@ class Solution {
 class Solution {
     public double myPow(double x, int n) {
         if (n == 0) return 1;
-        double ans = 1;
-        double current_product = x;
+        if (n == 1) return x;
+        
+        double res = 1.0;
+        double curr_product = x;
+        
         if (n < 0) {
-            ans *= 1/x;
-            n = -(n+1);
-            current_product = 1/x;
-        }                
-        for (int power = n; power > 0; power /= 2) {
-            if ((power % 2) == 1) {
-                ans = ans * current_product;
-            }
-            current_product = current_product * current_product;
+            n = -(n + 1);
+            res = 1 / x; // n+1 to handle corner case of n=Integer.MIN_VALUE;
+            curr_product = 1 / x;
         }
-        return ans;
+        
+        for (int power = n; power > 0; power = power / 2) {
+            if (power % 2 == 1) { // if n is odd
+                res = res * curr_product;
+            }
+            curr_product *= curr_product;
+        }
+        return res;
     }
 }
