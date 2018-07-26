@@ -3,29 +3,29 @@ class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
-        LinkedList<TreeNode> list = new LinkedList<>();
-        list.add(root);
         boolean leftToRight = true;
+        List<TreeNode> list = new ArrayList<>();
+        list.add(root);
         while (!list.isEmpty()) {
             int size = list.size();
-            LinkedList<Integer> clist = new LinkedList<>();
-            if (leftToRight == true) {
+            List<Integer> clist = new ArrayList<>();
+            if (leftToRight) {
                 for (int i = 0; i < size; i++) {
                     TreeNode curr = list.remove(0);
                     clist.add(curr.val);
                     if (curr.left != null) list.add(curr.left);
                     if (curr.right != null) list.add(curr.right);
-                }   
-                leftToRight = false;
+                    leftToRight = false;
+                }
             }
             else {
                 for (int i = 0; i < size; i++) {
-                    TreeNode curr = list.remove(list.size()-1);
+                    TreeNode curr = list.remove(list.size() - 1);
                     clist.add(curr.val);
                     if (curr.right != null) list.add(0, curr.right);
                     if (curr.left != null) list.add(0, curr.left);
-                }     
-                leftToRight = true;
+                    leftToRight = true;
+                }                
             }
             res.add(clist);
         }

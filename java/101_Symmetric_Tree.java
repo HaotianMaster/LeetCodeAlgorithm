@@ -45,27 +45,26 @@ class Solution {
         if (root.left == null && root.right == null) return true;
         if (root.left == null || root.right == null) return false;
         if (root.left.val != root.right.val) return false;
-        LinkedList<Integer> leftlist = new LinkedList<>();
-        LinkedList<Integer> rightlist = new LinkedList<>();
-        Deque<TreeNode> st = new ArrayDeque<>();
-        TreeNode p1 = root.left;
-        TreeNode p2 = root.right;
-        leftlist = inorderTraversal(p1, leftlist);
-        rightlist = rightInorderTraversal(p2, rightlist);
+        ArrayList<Integer> leftlist = new ArrayList<>();
+        ArrayList<Integer> rightlist = new ArrayList<>();
+        inorderTraversal(root.left, leftlist);
+        rightInorderTraversal(root.right, rightlist);
         return leftlist.equals(rightlist);
     }
-    public LinkedList<Integer> inorderTraversal(TreeNode p, LinkedList<Integer> list) {
-        if (p == null) return list;
-        list = inorderTraversal(p.left, list);
-        list.add(p.val);
-        list = inorderTraversal(p.right, list);
-        return list;
+    public void inorderTraversal(TreeNode root, ArrayList<Integer> list) {
+        if (root == null) return;
+        inorderTraversal(root.left, list);
+        list.add(root.val);
+        inorderTraversal(root.right, list);
     }
-    public LinkedList<Integer> rightInorderTraversal(TreeNode p, LinkedList<Integer> list) {
-        if (p == null) return list;
-        list = rightInorderTraversal(p.right, list);
-        list.add(p.val);
-        list = rightInorderTraversal(p.left, list);  
-        return list;
+    public void rightInorderTraversal(TreeNode root, ArrayList<Integer> list) {
+        if (root == null) return;
+        rightInorderTraversal(root.right, list);
+        list.add(root.val);
+        rightInorderTraversal(root.left, list);
     }
 }
+
+
+
+

@@ -10,37 +10,37 @@
 // Recursive solution.
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        LinkedList<Integer> list = new LinkedList<>(); 
-        if (root == null) return list;
-        traversal(root, list);
-        return list;
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        helper(root, res);
+        return res;
     }
-    public void traversal(TreeNode root, LinkedList<Integer> list) {
+    public void helper(TreeNode root, List<Integer> res) {
         if (root == null) return;
-        list.add(root.val);
-        traversal(root.left, list);
-        traversal(root.right, list);
+        res.add(root.val);
+        helper(root.left, res);
+        helper(root.right, res);
     }
 }
 // Iterative solution.
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        LinkedList<Integer> list = new LinkedList<>();
-        if(root == null) return list;
-        Deque<TreeNode> st = new ArrayDeque<>();
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Stack<TreeNode> st = new Stack<>();
         TreeNode p = root;
         while (!st.isEmpty() || p != null) {
             if (p != null) {
+                res.add(p.val);
                 st.push(p);
-                list.add(p.val);  // Add before going to children
                 p = p.left;
             }
             else {
-                TreeNode curr = st.pop();
-                p = curr.right;
+                p = st.pop();
+                p = p.right;
             }
         }
-        return list;
+        return res;
     }
 }
 
@@ -49,7 +49,7 @@ class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         LinkedList<Integer> list = new LinkedList<>();
         if(root == null) return list;
-        Deque<TreeNode> st = new ArrayDeque<>();
+        Stack<TreeNode> st = new Stack<>();
         st.push(root);
         while (!st.isEmpty()) {
             TreeNode curr = st.pop();

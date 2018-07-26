@@ -13,7 +13,6 @@ public class Solution {
         Queue<UndirectedGraphNode> queue = new LinkedList<>();
         Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
         queue.offer(node);
-        map.put(node, null);
         // BFS traverse the whole graph and make a copy of node using HashMap.
         while (!queue.isEmpty()) {
             UndirectedGraphNode curr = queue.poll();
@@ -22,7 +21,6 @@ public class Solution {
             for (UndirectedGraphNode next : curr.neighbors) {
                 if (!map.containsKey(next)) {
                     queue.offer(next);
-                    map.put(next, null);
                 }
             }
         }
@@ -53,6 +51,25 @@ public class Solution {
         map.put(copy.label, copy);
         for (UndirectedGraphNode neighbor : node.neighbors) {
             copy.neighbors.add(cloneHelper(neighbor));
+        }
+        return copy;
+    }
+}
+
+public class Solution {
+    Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        return helper(node);
+    }
+    public UndirectedGraphNode helper(UndirectedGraphNode node) {
+        if (node == null) return null;
+        if (map.containsKey(node)) return map.get(node);
+        
+        UndirectedGraphNode copy = new UndirectedGraphNode(node.label);
+        copy.neighbors = new ArrayList<>();
+        map.put(node, copy);
+        for (UndirectedGraphNode neighbor : node.neighbors) {
+            copy.neighbors.add(helper(neighbor));
         }
         return copy;
     }

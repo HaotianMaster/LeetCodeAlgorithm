@@ -3,7 +3,6 @@ class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if (beginWord.equals(endWord)) return 0;
         int level = 1;
-        boolean ladder = false;
         Map<String, List<String>> map = new HashMap<>();
         buildMap(beginWord, wordList, map);
         Queue<String> queue = new LinkedList<>();
@@ -15,16 +14,17 @@ class Solution {
             for (int i = 0; i < size; i++) {
                 String curr = queue.poll();
                 if (curr.equals(endWord)) return level;
-                List<String> list = map.get(curr);
-                for (String str : list) {
-                    if (set.contains(str)) continue;
-                    queue.offer(str);
-                    set.add(str);
+                List<String> nxt_list = map.get(curr);
+                for (String nxt : nxt_list) {
+                    if (!set.contains(nxt)) {
+                        queue.offer(nxt);
+                        set.add(nxt);
+                    }
                 }
             }
             level++;
         }
-        return 0;
+        return 0;        
     }
     
     public void buildMap(String beginWord, List<String> wordList, Map<String, List<String>> map) {

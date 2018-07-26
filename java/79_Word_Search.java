@@ -42,3 +42,36 @@ class Solution {
         return false;
     }
 }
+
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0) return false;
+        int m = board.length, n = board[0].length;
+        boolean[][] memory = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (existHelper(board, word, memory, i, j, 0)) return true;
+            }
+        }
+        return false;
+    }
+    public boolean existHelper(char[][] board, String word, boolean[][] memory, int x, int y, int idx) {
+        if (idx == word.length()) return true;
+        if (x < 0 || y < 0 || x >= board.length || y >= board[0].length || memory[x][y] == true) return false;
+        if (board[x][y] != word.charAt(idx)) return false;
+        
+        memory[x][y] = true;
+        boolean existed = false;
+        existed = existHelper(board, word, memory, x + 1, y, idx + 1);
+        if (existed) return true;
+        existed = existHelper(board, word, memory, x - 1, y, idx + 1);
+        if (existed) return true;
+        existed = existHelper(board, word, memory, x, y - 1, idx + 1);
+        if (existed) return true;
+        existed = existHelper(board, word, memory, x, y + 1, idx + 1);
+        if (existed) return true;
+        memory[x][y] = false;
+        
+        return false;
+    }
+}

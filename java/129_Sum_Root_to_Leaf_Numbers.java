@@ -38,3 +38,22 @@ class Solution {
         sb.deleteCharAt(sb.length()-1);
     }
 }
+
+class Solution {
+    int res = 0;
+    public int sumNumbers(TreeNode root) {
+        if (root == null) return res;
+        helper(root, 0);
+        return res;
+    }
+    public void helper(TreeNode root, int curr) {
+        if (root == null) return;
+        if (root.left == null && root.right == null) {
+            curr = curr * 10 + root.val;
+            res += curr;
+            return;
+        }
+        helper(root.left, curr * 10 + root.val);
+        helper(root.right, curr * 10 + root.val);
+    }
+}

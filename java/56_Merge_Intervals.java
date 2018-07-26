@@ -60,6 +60,28 @@ class Solution {
     }
 }
 
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        Comparator<Interval> mComparator = new Comparator<Interval>() {
+            @Override
+            public int compare(Interval a, Interval b) {
+                return a.start - b.start;
+            }
+        };
+        Collections.sort(intervals, mComparator);
+        List<Interval> merged = new ArrayList<>();
+        for (Interval curr:intervals) {
+            if (merged.isEmpty() || merged.get(merged.size() - 1).end < curr.start) {
+                merged.add(curr);
+            }
+            else {
+                merged.get(merged.size() - 1).end = Math.max(curr.end, merged.get(merged.size() - 1).end);
+            }
+        }
+        return merged;
+    }        
+}
+
 /**
  * However, if we don't want to sort the input list and do this in O(n) time, we need to think of some special data structure. 
  * By sorting, we actually want the interval in intervals list with the smallest start time

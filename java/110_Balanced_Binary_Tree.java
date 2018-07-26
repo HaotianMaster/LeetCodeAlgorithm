@@ -13,23 +13,16 @@
 class Solution {
     public boolean isBalanced(TreeNode root) {
         if (root == null) return true;
-        // check the first condition.
-        int left = treeHeight(root.left);
-        int right = treeHeight(root.right);
-        int diffHeight = Math.abs(left-right);
-        if (diffHeight>1) return false;
-        // check the second condition. 
-        if (!isBalanced(root.left) || !isBalanced(root.right)) return false;
-        return true;
+        int left = depth(root.left);
+        int right = depth(root.right); 
+        if (Math.abs(left - right) > 1) return false;
+        return isBalanced(root.left) && isBalanced(root.right);
     }
-    public int treeHeight(TreeNode root) {
-        if (root == null) return -1;
-        if (root.left == null && root.right == null) return 0;
-        int height = 1;
-        int left = treeHeight(root.left);
-        int right = treeHeight(root.right);
-        height = height+Math.max(left, right);
-        return height;
+    public int depth(TreeNode root) {
+        if (root == null) return 0;
+        int left = depth(root.left);
+        int right = depth(root.right);
+        return Math.max(left, right) + 1;
     }
 }
 // Better Implementation. 
@@ -41,13 +34,13 @@ class Solution {
     public int treeHeight(TreeNode root) {
         if (root == null) return -1;
         if (root.left == null && root.right == null) return 0;
-        int height = 1;
+        
         int left = treeHeight(root.left);
         if (left == -2) return -2;
         int right = treeHeight(root.right);
         if (right == -2) return -2;
         if (Math.abs(left-right) > 1) return -2;
-        height = height+Math.max(left, right);
-        return height;
+        
+        return 1 + Math.max(left, right);
     }
 }

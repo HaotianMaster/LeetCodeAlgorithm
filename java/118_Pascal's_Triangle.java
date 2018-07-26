@@ -26,22 +26,26 @@ class Solution {
 // My implementation for hw2
 class Solution {
     public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> results = new ArrayList<>();
-        if (numRows == 0) return results;
-        for (int i=0; i<numRows; i++) {
-            List<Integer> list = new ArrayList<>();
-            for (int j=0; j<=i; j++) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (numRows == 0) return res;
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> list = new ArrayList<>(); 
+            for (int j = 0; j <= i; j++) {
                 if (j == 0 || j == i) {
                     list.add(1);
                 }
                 else {
-                    List<Integer> prev = results.get(i-1);
-                    int temp = prev.get(j-1)+prev.get(j);
-                    list.add(temp);
+                    int num = res.get(i - 1).get(j - 1) + res.get(i - 1).get(j);
+                    list.add(num);
                 }
             }
-            results.add(list);
+            res.add(list);
         }
-        return results;
+        return res;
     }
 }
+
+
+
+
+

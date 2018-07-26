@@ -9,16 +9,16 @@
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        LinkedList<Integer> list = new LinkedList<>(); 
-        if (root == null) return list;
-        traversal(root, list);
-        return list;
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        helper(root, res);
+        return res;
     }
-    public void traversal(TreeNode root, LinkedList<Integer> list) {
+    public void helper(TreeNode root, List<Integer> res) {
         if (root == null) return;
-        traversal(root.left, list);
-        traversal(root.right, list);
-        list.add(root.val);
+        helper(root.left, res);
+        helper(root.right, res);
+        res.add(root.val);
     }
 }
 
@@ -26,21 +26,21 @@ class Solution {
 // Iterative Solution
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        LinkedList<Integer> list = new LinkedList<>(); 
-        if (root == null) return list;
-        Deque<TreeNode> st = new ArrayDeque<>();
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Stack<TreeNode> st = new Stack<>();
         TreeNode p = root;
         while (!st.isEmpty() || p != null) {
-            if(p != null) {
+            if (p != null) {
                 st.push(p);
-                list.addFirst(p.val);    // Reverse the process of preorder
-                p = p.right;             // Reverse the process of preorder
-            } else {
-                TreeNode curr = st.pop();
-                p = curr.left;           // Reverse the process of preorder
+                res.add(0, p.val); // Reverse the process of preorder
+                p = p.right;         // Reverse the process of preorder
+            }   
+            else {
+                p = st.pop();
+                p = p.left;          // Reverse the process of preorder
             }
-        }
-        return list;
+        }      
+        return res;
     }
-
 }

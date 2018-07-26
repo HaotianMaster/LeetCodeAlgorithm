@@ -20,10 +20,10 @@ class Solution {
 class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         if (obstacleGrid[0][0] == 1) return 0;
-        int n = obstacleGrid.length;
-        int m = obstacleGrid[0].length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (i == 0 && j == 0) {
                     obstacleGrid[i][j] = 1;
                     continue;
@@ -34,6 +34,6 @@ class Solution {
                 else obstacleGrid[i][j] = obstacleGrid[i][j-1] + obstacleGrid[i-1][j];
             }
         }
-        return obstacleGrid[n-1][m-1];        
+        return obstacleGrid[m-1][n-1];        
     }
 }

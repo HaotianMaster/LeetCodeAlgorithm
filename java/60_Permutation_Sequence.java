@@ -29,22 +29,30 @@ class Solution {
 // AC
 class Solution {
     public String getPermutation(int n, int k) {
-        if (k < 1 || n < 1) return "";
+        if (n < 1 || k < 1) return "";
+        List<Integer> nums = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        ArrayList<Integer> nums = new ArrayList<>();
         int[] factorial = new int[n];
+        //Get factorial n-1 to factorial 1.
         factorial[0] = 1;
-        for (int i=1; i<n; i++) {
-            factorial[i] = factorial[i-1]*i;
+        for (int i = 1; i < n; i++) {
+            factorial[i] = factorial[i - 1] * i;
         }
-        for (int i=1; i<=n; i++) {
+        //Prestore all the nums in ascending order.
+        for (int i = 1; i <= n; i++) {
             nums.add(i);
-        }        
-        k--;
-        for (int i=0; i<n; i++) {
-            sb.append(nums.remove(k/factorial[n-i-1]));
-            k = k%factorial[n-i-1];
         }
+        
+        k--;
+        for (int i = 0; i < n; i++) {
+            sb.append(nums.remove(k / factorial[n - i - 1]));
+            k %= factorial[n - i - 1];
+        }
+        
         return sb.toString();
     }
 }
+
+
+
+

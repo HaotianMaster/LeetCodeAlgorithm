@@ -23,20 +23,22 @@ class Solution {
 // HashSet. O(n) time, O(n) space.
 class Solution {
     public int longestConsecutive(int[] nums) {
-        if (nums==null || nums.length==0) return 0;
-        Set<Integer> num_set = new HashSet<>();
-        for (int num:nums) num_set.add(num);  
-        int longest = 1;
-        for (int num:nums) {
-            if (!num_set.contains(num-1)) {
+        if (nums == null || nums.length == 0) return 0;
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) set.add(num);
+        int res = 1;
+        for (int num : nums) {
+            if (!set.contains(num - 1)) {
                 int curr = 1;
-                while (num_set.contains(num+1)) {
-                    curr++;                    
+                while (set.contains(num + 1)) {
+                    curr++;
                     num++;
                 }
-                longest = Math.max(longest, curr);
+                res = Math.max(res, curr);
             }
         }
-        return longest;
+        return res;
     }
 }
+
+

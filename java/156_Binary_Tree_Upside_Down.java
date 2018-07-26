@@ -16,8 +16,8 @@ class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         if (root == null || root.left == null && root.right == null) return root;
         TreeNode curr = root;
-        TreeNode prev = null;
         TreeNode next = null;
+        TreeNode prev = null;
         TreeNode temp = null;
         while (curr != null) {
             next = curr.left;

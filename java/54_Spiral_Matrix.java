@@ -1,27 +1,24 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> results = new ArrayList<>();
-        if (matrix==null || matrix.length==0 || matrix[0].length==0) return results;
-        int top = 0;
-        int left = 0;
-        int bot = matrix.length-1;
-        int right = matrix[0].length-1;
-        while (left<right && top<bot) {
-            for (int i=left; i<right; i++) results.add(matrix[top][i]);
-            for (int i=top; i<bot; i++) results.add(matrix[i][right]);
-            for (int i=right; i>left; i--) results.add(matrix[bot][i]);
-            for (int i=bot; i>top; i--) results.add(matrix[i][left]);
-            left++;
-            right--;
-            bot--;
+        List<Integer> res = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return res;
+        int top = 0, left = 0, bot = matrix.length - 1, right = matrix[0].length - 1;
+        while (top < bot && left < right) {
+            for (int i = left; i < right; i++) res.add(matrix[top][i]);
+            for (int i = top; i < bot; i++) res.add(matrix[i][right]);
+            for (int i = right; i > left; i--) res.add(matrix[bot][i]);
+            for (int i = bot; i > top; i--) res.add(matrix[i][left]);
             top++;
+            left++;
+            bot--;
+            right--;
         }
-        if (left==right) {
-            for (int i=top; i<=bot; i++) results.add(matrix[i][left]);
+        if (left == right) {
+            for (int i = top; i <= bot; i++) res.add(matrix[i][right]);
         }
-        else if (top==bot) {
-            for (int i=left; i<=right; i++) results.add(matrix[top][i]);
+        else if (top == bot) {
+            for (int i = left; i <= right; i++) res.add(matrix[top][i]);
         }
-        return results;
+        return res;
     }
 }

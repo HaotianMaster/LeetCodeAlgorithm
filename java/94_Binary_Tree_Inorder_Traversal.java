@@ -10,16 +10,16 @@
 // Recursive solution.
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        LinkedList<Integer> list = new LinkedList<>(); 
-        if (root == null) return list;
-        traversal(root, list);
-        return list;
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        helper(root, res);
+        return res;
     }
-    public void traversal(TreeNode root, LinkedList<Integer> list) {
+    public void helper(TreeNode root, List<Integer> res) {
         if (root == null) return;
-        traversal(root.left, list);
-        list.add(root.val);
-        traversal(root.right, list);
+        helper(root.left, res);
+        res.add(root.val);
+        helper(root.right, res);
     }
 }
 

@@ -8,30 +8,29 @@
  */
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        int maxarea = 0;
-        if (heights==null||heights.length == 0) return maxarea;
+        int res = 0;
+        if (heights == null || heights.length == 0) return res;
         Stack<Integer> st = new Stack<>();
-        for (int i=0; i<heights.length; i++) {
-            if (st.empty() || heights[i]>=heights[st.peek()]) {
+        for (int i = 0; i < heights.length; i++) {
+            if (st.isEmpty() || heights[i] >= heights[st.peek()]) {
                 st.push(i);
             }
             else {
-                int rightmost = i;
-                int leftmost = st.pop();
-                int h = heights[leftmost];
-                while (!st.empty() && heights[leftmost]==heights[st.peek()]) leftmost = st.pop();
-                leftmost = (st.empty()) ? -1 : st.peek();
-                maxarea = Math.max(maxarea, h*(rightmost-leftmost-1));
+                int right = i, left = st.pop();
+                int h = heights[left];
+                while (!st.isEmpty() && heights[left] == heights[st.peek()]) left = st.pop();
+                left = st.isEmpty() ? -1 : st.peek();
+                res = Math.max(res, h * (right - left - 1));
                 i--;
             }
         }
-        int rightmost = st.peek()+1;
-        while (!st.empty()) {
-            int curr = st.pop();
-            int h = heights[curr];
-            int leftmost = (st.empty()) ? -1 : st.peek();
-            maxarea = Math.max(maxarea, h*(rightmost-leftmost-1));
+        int right = heights.length;
+        while (!st.isEmpty()) {
+            int left = st.pop();
+            int h = heights[left];
+            left = st.isEmpty() ? -1 : st.peek();
+            res = Math.max(res, h * (right - left - 1));
         }
-        return maxarea;
+        return res;
     }
 }

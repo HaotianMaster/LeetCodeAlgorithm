@@ -13,12 +13,10 @@ class Solution {
         }
         for (int i=pos; i<s.length(); i++) {
             String currWord = s.substring(pos, i+1);
-            if (pos == 0 && wordDict.contains(currWord)) {
-                wordBreakHelper(res, s, wordDict, i+1, currWord);
-            }
-            else if (wordDict.contains(currWord)){
-                wordBreakHelper(res, s, wordDict, i+1, sentence + " " + currWord);
-            }            
+            if (wordDict.contains(currWord)) {
+                if (pos == 0) wordBreakHelper(res, s, wordDict, i+1, currWord);
+                else wordBreakHelper(res, s, wordDict, i+1, sentence + " " + currWord);
+            }          
         }
     }
 }
@@ -26,7 +24,7 @@ class Solution {
 // Use HashMap to save the previous results to prune duplicated branches.
 // DFS/Backtracking with memoization.
 class Solution {
-    HashMap<Integer, List<String>> map = new HashMap<>();
+    Map<Integer, List<String>> map = new HashMap<>();
     public List<String> wordBreak(String s, List<String> wordDict) {
         return wordBreakHelper(s, wordDict, 0);
     }
@@ -38,14 +36,15 @@ class Solution {
         if (pos == s.length()) {
             res.add("");
         }
-        for (int i=pos; i<s.length(); i++) {
-            String currWord = s.substring(pos, i+1);
-            if (wordDict.contains(currWord)) {
-                List<String> subList = wordBreakHelper(s, wordDict, i+1);
-                for (String str : subList) {
-                    res.add(currWord + (str.equals("") ? "" : " ") + str);
+        for (int i = pos; i < s.length(); i++) {
+            String word = s.substring(pos, i + 1);
+            if (wordDict.contains(word)) {
+                List<String> list = wordBreakHelper(s, wordDict, i + 1);
+                for (String str : list) {
+                    String curr = str.equals("") ? word : word + " " + str;
+                    res.add(curr);
                 }
-            }           
+            }
         }
         map.put(pos, res);
         return res;

@@ -1,3 +1,9 @@
+/**
+ * Use a Doulbe LinkedList to store the key-value pairs. 
+ * Keep pseudo tail and head pointers pointing at the oldest poisition and most recent poisition, which makes the insertion much easier. And we don't have to check for boundary conditions (Null nodes) during update.  
+ * Use a HashMap to keep track of the key and its corresponding node in the linkedlist. 
+ * All operations are in O(1) time.
+ */
 class LRUCache {
     private class DListNode {
         int key;
