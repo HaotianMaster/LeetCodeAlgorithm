@@ -24,27 +24,26 @@ class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         HashSet<String> set1 = new HashSet<>();
         HashSet<String> set2 = new HashSet<>();
-        List<String> list = new ArrayList<>();
-        if (s == null || s.length() <= 10) return list;       
-        for (int i=0; i<=s.length()-10; i++) {
-            if (!set1.add(s.substring(i, i+10))) {
-                set2.add(s.substring(i, i+10));
+
+        for (int i = 0; i <= s.length() - 10; i++) {
+            if (!set1.add(s.substring(i, i + 10))) {
+                set2.add(s.substring(i, i + 10));
             }
         }
-        return new ArrayList<String>(set2);
+        return new ArrayList<String>(set2);        
     }
 }
 // 1 HashSet
 class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         HashSet<String> set1 = new HashSet<>();
-        List<String> list = new ArrayList<>();
-        if (s == null || s.length() <= 10) return list;       
-        for (int i=0; i<=s.length()-10; i++) {
-            if (!set1.add(s.substring(i, i+10)) && !list.contains(s.substring(i, i+10))) {
-                list.add(s.substring(i, i+10));
+        List<String> res = new ArrayList<>();
+        if (s == null || s.length() <= 10) return res;       
+        for (int i = 0; i <= s.length() - 10; i++) {
+            if (!set1.add(s.substring(i, i + 10)) && !res.contains(s.substring(i, i + 10))) {
+                res.add(s.substring(i, i + 10));
             }
         }
-        return list;
+        return res;      
     }
 }

@@ -34,26 +34,32 @@ class Solution {
 // Hash table  O(n) time, O(n) space.
 class Solution {
     public int majorityElement(int[] nums) {
-        if (nums == null || nums.length == 0) return -1;
-        Map<Integer, Integer> map = countnums(nums);
-        Map.Entry<Integer, Integer> majority = null;
-        for (Map.Entry<Integer, Integer> curr:map.entrySet()) {
-            if (majority == null || majority.getValue() < curr.getValue()) {
-                majority = curr;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        Map.Entry<Integer, Integer> res = null;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (res == null || res.getValue() < entry.getValue()) {
+                res = entry;
             }
         }
-        return majority.getKey();
-    }
-    public Map<Integer, Integer> countnums(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int num:nums) {
-            if (map.containsKey(num)) map.replace(num, map.get(num)+1);
-            else map.put(num, 1);
-        }
-        return map;
+        return res.getKey();
     }
 }
 
+// Moore Voting
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0, res = 0;
+        for (int num : nums) {
+            if (count == 0) res = num;
+            if (num != res) count--;
+            else count++;
+        }
+        return res;
+    }
+}
 
 //Divide and Conquer. O(logn) time, O(logn) space.
 
