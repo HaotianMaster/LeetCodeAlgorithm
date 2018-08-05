@@ -1,8 +1,8 @@
-// O(log N) Binary search solution
 class Solution {
-    public int search(int[] nums, int target) {
-        if (nums == null || nums.length == 0) return -1;
+    public boolean search(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return false;
         int left = 0, right = nums.length - 1;
+
         while (left + 1 < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] > nums[left]) {
@@ -13,9 +13,11 @@ class Solution {
                 if (target <= nums[right] && target >= nums[mid]) left = mid;
                 else right = mid;
             }
+            else {
+                left++;
+            }
         }
-        if (nums[left] == target) return left;
-        if (nums[right] == target) return right;
-        return -1;
+        if (nums[left] == target || nums[right] == target) return true;
+        return false;        
     }
 }
